@@ -1,3 +1,9 @@
 .App {
   padding-block: center;
 }
+
+.actions {
+  display: flex;
+  margin: 0 2em;
+  justify-content: space-between;
+}

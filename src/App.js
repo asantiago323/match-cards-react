@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from '@material-ui/core';
 
 import './App.css';
 
@@ -12,6 +13,7 @@ function App() {
   const [solved, setSolved] = useState([]);
   const [disabled, setDisabled] = useState(false);
   const [counter, setCounter] = useState(0);
+  const [solveCounter, setSolveCounter] = useState(0);
 
   useEffect(() => {
     resizeBoard();
@@ -30,6 +32,7 @@ function App() {
       setFlipped([id]);
       setDisabled(false);
     } else {
+      setSolveCounter( solveCounter + 1);
       if (sameCardClicked(id)) return;
       setFlipped([flipped[0], id]);
       if (isMatch(id)) {
@@ -69,6 +72,7 @@ function App() {
     resetCards();
     setSolved([]);
     setCounter(0);
+    setSolveCounter(0);
   };
 
   return (
@@ -83,12 +87,21 @@ function App() {
         dimension={dimension}
         disabled={disabled}
         solved={solved} />
-        <div>
-          <p>Total matches found: {counter}</p>
-          {
-            counter === 8 ? <button onClick={resetBoard}>Reset Board</button> : null
-          }
-        </div>
+        {
+          counter === 8 ?
+          <div className="actions">
+          <Button
+            onClick={resetBoard}
+            variant="contained"
+            color="primary"
+            size="small"
+          >Reset Board</Button>
+          <p>It took you {solveCounter} tries.</p>
+          </div> : 
+            <div className="actions">
+              <p>Total matches found: {counter}</p>
+            </div>
+        }
     </div>
   );
 }
